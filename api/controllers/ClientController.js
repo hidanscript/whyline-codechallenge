@@ -27,20 +27,15 @@ ClientController.deleteClient = (req, res) => {
     })
 }
 
-ClientController.searchClientByName = (req, res) => {
-    Client.find({ company: { $regex: req.params.name, $options: 'i' }}).then(clients => {
+ClientController.searchClient = (req, res) => {
+    const search = req.params.search
+    const query = { $or: [{ company: { $regex: search, $options: 'i' } }, { state: { $regex: search, $options: 'i' } }]}
+    Client.find(query).then(clients => {
         res.json(clients).status(200)
     }).catch(err => {
         res.status(400).json(err)
     })
 }
 
-ClientController.searchClientByState = (req, res) => {
-    Client.find({ state: { $regex: req.params.state, $options: 'i' }}).then(clients => {
-        res.json(clients).status(200)
-    }).catch(err => {
-        res.status(400).json(err)
-    })
-}
 
 export default ClientController
