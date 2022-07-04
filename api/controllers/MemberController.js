@@ -11,7 +11,7 @@ MemberController.createMember = (req, res) => {
     })
 }
 
-// We should add pagination here if the database is too large
+// We should add pagination here if the database is too big
 MemberController.getAllMembers = (req, res) => {
     Member.find().then(members => {
         res.json(members).status(200)
@@ -21,16 +21,8 @@ MemberController.getAllMembers = (req, res) => {
 }
 
 MemberController.changeMemberClient = (req, res) => {
-    Member.findById(req.params.clientId).then(member => {
-        if (!member) {
-            return res.status(404).json({ message: 'Member not found' })
-        }
-        member.client = req.body.client
-        member.save().then(() => {
-            res.json({ message: 'Member updated successfully!' }).status(200)
-        }).catch(err => {
-            res.status(400).json(err)
-        })
+    Member.findByIdAndUpdate(req.params.id, { client: req.body.client }).then(() => {
+        res.json({ message: 'Member updated successfully!' }).status(200)
     }).catch(err => {
         res.status(400).json(err)
     })
