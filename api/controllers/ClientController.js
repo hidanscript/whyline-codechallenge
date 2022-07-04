@@ -16,12 +16,14 @@ ClientController.editClient = (req, res) => {
         if (!client) {
             return res.status(404).json({ message: 'Client not found' })
         }
-        client.company = req.body.company
-        client.address = req.body.address
-        client.city = req.body.city
-        client.state = req.body.state
-        client.zip = req.body.zip
-        client.headcount = req.body.headcount
+
+        client.company = req.body.company || client.company
+        client.address = req.body.address || client.address
+        client.city = req.body.city || client.city
+        client.state = req.body.state  || client.state
+        client.zip = req.body.zip || client.zip
+        client.headcount = req.body.headcount || client.headcount
+
         client.save().then(() => {
             res.json({ message: 'Client updated successfully!' }).status(200)
         }).catch(err => {

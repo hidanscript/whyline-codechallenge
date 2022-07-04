@@ -4,7 +4,8 @@ const clientSchema = new mongoose.Schema({
     company: {
         type: String,
         required: [true, 'Company is required'],
-        trim: true
+        trim: true,
+        index: true // index this field for faster searching, in the case of a lot of clients
     },
     address: {
         type: String,
@@ -19,7 +20,8 @@ const clientSchema = new mongoose.Schema({
     state: {
         type: String,
         required: [true, 'State is required'],
-        trim: true
+        trim: true,
+        index: true // Same here
     },
     zip: {
         type: String,
