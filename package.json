@@ -1,0 +1,24 @@
+{
+  "name": "whyline",
+  "version": "1.0.0",
+  "description": "Whyline backend coding challenge",
+  "type": "module",
+  "main": "app.js",
+  "scripts": {
+    "dev": "npx eslint ./ && nodemon app.js",
+    "start": "node app.js"
+  },
+  "keywords": [],
+  "author": "David Ortiz Marcano",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "mongoose": "^6.4.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.18.0",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.18"
+  }
+}
