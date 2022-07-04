@@ -32,9 +32,12 @@ const clientSchema = new mongoose.Schema({
         type: Number,
         default: 0
     }
-}, {
-    timestamps: true,
-    versionKey: false
+})
+
+clientSchema.pre('remove', function (next) {
+    const Member = mongoose.model('Member')
+    Member.remove({ client: this._id }).exec()
+    next()
 })
 
 export default mongoose.models.Client || mongoose.model('Client', clientSchema)

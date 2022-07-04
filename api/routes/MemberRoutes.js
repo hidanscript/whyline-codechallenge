@@ -1,12 +1,13 @@
 import express from 'express'
-import ClientController from '../controllers/ClientController.js'
+import MemberController from '../controllers/MemberController.js'
 
 const router = express.Router()
 
-router.get('/:name', ClientController.searchClientByName)
-router.get('/:state', ClientController.searchClientByState)
-router.post('/', ClientController.createClient)
-router.put('/:id', ClientController.editClient)
-router.delete('/:id', ClientController.deleteClient)
+router.get('/', MemberController.getAllMembers)
+router.post('/', MemberController.createMember)
+router.put('/changeclient/:id', MemberController.changeMemberClient)
+router.get('/:id/notes', MemberController.getNotesByMemberId)
+router.post('/:id/notes', MemberController.createNote)
+router.delete('/:id/notes/:noteId', MemberController.deleteNote)
 
 export default router

@@ -25,4 +25,10 @@ const memberSchema = new mongoose.Schema({
     versionKey: false
 })
 
+memberSchema.pre('remove', function (next) {
+    const MemberNote = mongoose.model('MemberNote')
+    MemberNote.remove({ member: this._id }).exec()
+    next()
+})
+
 export default mongoose.models.Member || mongoose.model('Member', memberSchema)
