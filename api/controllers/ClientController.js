@@ -12,23 +12,8 @@ ClientController.createClient = (req, res) => {
 }
 
 ClientController.editClient = (req, res) => {
-    Client.findById(req.params.id).then(client => {
-        if (!client) {
-            return res.status(404).json({ message: 'Client not found' })
-        }
-
-        client.company = req.body.company || client.company
-        client.address = req.body.address || client.address
-        client.city = req.body.city || client.city
-        client.state = req.body.state  || client.state
-        client.zip = req.body.zip || client.zip
-        client.headcount = req.body.headcount || client.headcount
-
-        client.save().then(() => {
-            res.json({ message: 'Client updated successfully!' }).status(200)
-        }).catch(err => {
-            res.status(400).json(err)
-        })
+    Client.findByIdAndUpdate(req.params.id, req.body).then(() => {
+        res.json({ message: 'Client updated successfully!' }).status(200)
     }).catch(err => {
         res.status(400).json(err)
     })
