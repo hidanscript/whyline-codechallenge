@@ -12,7 +12,7 @@ ClientController.createClient = (req, res) => {
 }
 
 ClientController.editClient = (req, res) => {
-    Client.findByIdAndUpdate(req.params.id, req.body).then(() => {
+    Client.findByIdAndUpdate(req.params.id, { $set: { ...req.body } }).then(() => {
         res.json({ message: 'Client updated successfully!' }).status(200)
     }).catch(err => {
         res.status(400).json(err)

@@ -19,16 +19,14 @@ const memberSchema = new mongoose.Schema({
     client: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Client'
-    }
-}, {
-    timestamps: true,
-    versionKey: false
+    },
+    notes: [{
+        type: new mongoose.Schema({
+            text: String
+        }, {
+            timestamps: true
+        })
+    }]
 })
 
-memberSchema.pre('remove', function (next) {
-    const MemberNote = mongoose.model('MemberNote')
-    MemberNote.remove({ member: this._id }).exec()
-    next()
-})
-
-export default mongoose.models.Member || mongoose.model('Member', memberSchema)
+export default mongoose.model('Member', memberSchema)

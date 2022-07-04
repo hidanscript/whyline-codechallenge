@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import Member from './Member.js'
 
 const clientSchema = new mongoose.Schema({
     company: {
@@ -34,10 +35,13 @@ const clientSchema = new mongoose.Schema({
     }
 })
 
-clientSchema.pre('remove', function (next) {
-    const Member = mongoose.model('Member')
-    Member.remove({ client: this._id }).exec()
-    next()
+// If a client is deleted, we will delete all associated members
+clientSchema.pre('findOneAndDelete', { query: true, document: false }, function (next) {
+    this.model.findOne(this.getQuery()).then(client => {
+        Member.deleteMany({ client: client._id }).then(() => {
+            next()
+        })
+    })
 })
 
-export default mongoose.models.Client || mongoose.model('Client', clientSchema)
+export default mongoose.model('Client', clientSchema)
